@@ -1,0 +1,23 @@
+{
+  "name": "@deepseek-ai/dsh-desktop",
+  "description": "Windows desktop shell for the DeepSeek Harness Web GUI: spawns the local `dsh web` server and hosts it in an Electron window",
+  "version": "0.1.0-rc.5",
+  "private": true,
+  "type": "module",
+  "main": "main.mjs",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "smoke": "electron . --smoke",
+    "icon": "electron scripts/make-icon.mjs",
+    "electron:extract": "node scripts/ensure-electron.mjs",
+    "assemble": "node scripts/assemble-payload.mjs",
+    "dist:dir": "electron-builder --win --dir",
+    "dist": "electron-builder --win",
+    "dist:portable": "electron-builder --win portable"
+  },
+  "devDependencies": {
+    "electron": "28.3.3",
+    "electron-builder": "^26.15.3"
+  }
+}

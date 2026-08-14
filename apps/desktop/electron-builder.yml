@@ -1,0 +1,40 @@
+# electron-builder configuration for the DeepSeek Harness desktop shell.
+# The dsh runtime payload is assembled by `pnpm assemble` (scripts/assemble-payload.mjs)
+# into release/payload and release/resources/node before `pnpm dist` runs.
+appId: ai.deepseek.harness.desktop
+productName: DeepSeek Harness
+copyright: Copyright © 2026 DeepSeek AI
+directories:
+  output: release
+  buildResources: build
+files:
+  - main.mjs
+  - package.json
+asar: true
+# Use the locally installed (and extracted) Electron instead of downloading one.
+electronDist: node_modules/electron/dist
+# Native modules inside the bundled payload are prebuilt for the bundled Node
+# (same ABI as this machine's Node); electron-builder must not rebuild them.
+npmRebuild: false
+extraResources:
+  - from: release/payload
+    to: dsh
+  - from: release/resources/node
+    to: node
+afterPack: scripts/after-pack.cjs
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+  icon: build/icon.png
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: DeepSeek Harness
+  artifactName: ${productName}-Setup-${version}.${ext}
+portable:
+  artifactName: ${productName}-Portable-${version}.${ext}
